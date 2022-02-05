@@ -7,6 +7,7 @@ MANANA, TARDE;
 	private Tramo() {
 		
 	}
+	
 	public String toString() {
 		return null;
 	}
