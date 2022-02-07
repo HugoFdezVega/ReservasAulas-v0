@@ -9,7 +9,7 @@ public class Permanencia {
 	private LocalDate dia;
 	private final static DateTimeFormatter FORMATO_DIA=DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
-//	Getters y setters
+//	Getters y setters, validando posibles null
 	public LocalDate getDia() {
 		return dia;
 	}
@@ -23,7 +23,7 @@ public class Permanencia {
 		}
 		this.dia = dia;
 	}
-	public void setTramo(Tramo tramo) {
+	private void setTramo(Tramo tramo) {
 		if (tramo==null) {
 			throw new NullPointerException("ERROR: El tramo de una permanencia no puede ser nulo.");
 		}
@@ -36,7 +36,7 @@ public class Permanencia {
 		setTramo(tramo);
 	}
 	
-//	Constructor copia
+//	Constructor copia, validando posible null
 	public Permanencia (Permanencia p) {
 		if (p==null) {
 			throw new NullPointerException("ERROR: No se puede copiar una permanencia nula.");
