@@ -2,7 +2,6 @@ package org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
 
 public class Profesores {
@@ -121,9 +120,9 @@ public class Profesores {
 		}
 	}
 	
-// Creamos el método borrar, que busca el índice del aula pasada como parámetro con buscarIndice. Comprobamos si el índice resultante supera el tamano
-// mediante tamanoSuperado. Si es así, significa que no ha encontrado ninguna cita coincidente y devolvemos excepcion. Si es así, pasamos el método
-// desplazarUnaPosicionHaciaIzquierda desde el índice donde ha encontrado la coincidencia para borrar el aula y reordenar el array, disminuyendo tamano después.
+// Creamos el método borrar, que busca el índice del profesor pasado como parámetro con buscarIndice. Comprobamos si el índice resultante supera el tamano
+// mediante tamanoSuperado. Si es así, significa que no ha encontrado ningún profesor coincidente y devolvemos excepcion. Si es así, pasamos el método
+// desplazarUnaPosicionHaciaIzquierda desde el índice donde ha encontrado la coincidencia para borrar el profesor y reordenar el array, disminuyendo tamano después.
 	public void borrar(Profesor profesor) throws OperationNotSupportedException {
 		int indice = 0;
 		if (profesor == null) {
