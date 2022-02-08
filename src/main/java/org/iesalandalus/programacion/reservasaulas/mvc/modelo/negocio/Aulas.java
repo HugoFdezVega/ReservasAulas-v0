@@ -76,8 +76,8 @@ public Aula[] get() {
 		return false;
 	}
 	
-//	Creamos insertar, que primero busca con buscarIndice, que buscará si la cita existe y nos dará su índice. Si no, dos dará tamano+1, así que pasamos el índice
-//	obtenido por tamanoSuperado. Si nos da true, significa que el resultado de buscarIndice ha sido tamano+1, ergo no existe esa cita y tenemos que insertarla en el
+//	Creamos insertar, que primero busca con buscarIndice, que buscará si el aula existe y nos dará su índice. Si no, dos dará tamano+1, así que pasamos el índice
+//	obtenido por tamanoSuperado. Si nos da true, significa que el resultado de buscarIndice ha sido tamano+1, ergo no existe ese aula y tenemos que insertarla en el
 //	siguiente índice libre, que sería tamano
 	public void insertar(Aula aula) throws OperationNotSupportedException {
 		if (aula == null) {
@@ -109,21 +109,23 @@ public Aula[] get() {
 		}
 	}
 	
-//	Creamos este método, que recorre el array desde el índice que le damos y desde ahí pisa esa cita con su cita de la derecha durante todo el tamaño
+//	Creamos este método, que recorre el array desde el índice que le damos y desde ahí pisa ese aula con su aula de la derecha durante todo el tamaño
 	private void desplazarUnaPosicionHaciaIzquierda(int indice) {
 		for (int i = indice; i < tamano-1; ++i) {
 			coleccionAulas[i] = new Aula(coleccionAulas[i + 1]);
 		}
 	}
 	
-//	Creamos borrar, que primero comprueba si la cita existe con buscar y luego nos da su índice con buscarIndice. Después lo desplaza todo con el método
-//	correspondiente y el índice obtenido, después pone a null el último elemento porque se quedaría copiado y podría dar lugar a error y reduce el tamaño.
+//Creamos el método borrar, que busca el índice del aula pasada como parámetro con buscarIndice. Comprobamos si el índice resultante supera el tamano
+//mediante tamanoSuperado. Si es así, significa que no ha encontrado ninguna cita coincidente y devolvemos excepcion. Si es así, pasamos el método 
+//desplazarUnaPosicionHaciaIzquierda desde el índice donde ha encontrado la coincidencia para borrar el aula y reordenar el array, disminuyendo tamano después.
 	public void borrar(Aula aula) throws OperationNotSupportedException {
 		int indice = 0;
 		if (aula == null) {
 			throw new NullPointerException("ERROR: No se puede borrar un aula nula.");
-		} else if (aula.equals(buscar(aula))) {
-			indice = buscarIndice(aula);
+		}
+		indice = buscarIndice(aula);
+		if (!tamanoSuperado(indice)) {
 			desplazarUnaPosicionHaciaIzquierda(indice);
 			coleccionAulas[tamano - 1] = null;
 			tamano--;
@@ -132,6 +134,7 @@ public Aula[] get() {
 		}
 	}
 	
+//Creamos el método representar que creará un array de tipo String en el que guardaremos los .toString de las aulas para su posterior uso.
 	public String[] representar() {
 		String[] representacion=new String[tamano];
 		int indice=0;
