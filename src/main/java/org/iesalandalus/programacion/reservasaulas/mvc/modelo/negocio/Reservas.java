@@ -170,7 +170,7 @@ public class Reservas {
 		return reservasProfesor;
 	}
 
-//Creamos getReservasProfesor, que ante un profesor dado recorrerá el array de Reservas buscando todas aquellas en las que coincida el aula con el
+//Creamos getReservasAula, que ante un aula dado recorrerá el array de Reservas buscando todas aquellas en las que coincida el aula con el
 //aula dado. Creará un nuevo array con las coincidencias y lo devolverá.
 	public Reserva[] getReservasAula(Aula aula) {
 		Reserva[] reservasAula = new Reserva[capacidad];
@@ -190,7 +190,7 @@ public class Reservas {
 		return reservasAula;
 	}
 
-//Creamos getReservasProfesor, que ante un profesor dado recorrerá el array de Reservas buscando todas aquellas en las que coincida la permanencia con la
+//Creamos getReservasPermanencia, que ante una permanencia dado recorrerá el array de Reservas buscando todas aquellas en las que coincida la permanencia con la
 //permanencia dada. Creará un nuevo array con las coincidencias y lo devolverá.
 	public Reserva[] getReservasPermanencia(Permanencia permanencia) {
 		Reserva[] reservasPermanencia = new Reserva[capacidad];
@@ -210,6 +210,8 @@ public class Reservas {
 		return reservasPermanencia;
 	}
 
+//Creamos este método, que ante un aula y una permanencia, recorrerá el arrat de reservas comprobando si existe coincidencias con ambas y si es así, nos dará false, 
+//de lo cotrario nos dará true.
 	public boolean consultarDisponibilidad(Aula aula, Permanencia permanencia) {
 		boolean disponibilidad = true;
 		if (aula == null) {
