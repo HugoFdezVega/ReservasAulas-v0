@@ -21,7 +21,7 @@ public class Consola {
 //Método que recorre el array de opciones y las va mostrando con el toString de Opcion
 	public static void mostrarMenu() {
 		for (Opcion o : opciones) {
-			o.toString();
+			System.out.println(o);
 		}
 	}
 

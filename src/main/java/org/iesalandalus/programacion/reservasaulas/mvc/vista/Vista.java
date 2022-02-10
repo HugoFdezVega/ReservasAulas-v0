@@ -19,7 +19,7 @@ public class Vista {
 	private final static String CORREO_VALIDO = "Manolo@eldelbombo.es";
 
 	public Vista() {
-
+		Opcion.setVista(this);
 	}
 
 //Método que setea el controlador una vez se instancie

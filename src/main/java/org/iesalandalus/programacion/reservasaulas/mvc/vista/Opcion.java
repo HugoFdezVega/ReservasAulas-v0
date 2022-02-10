@@ -91,6 +91,10 @@ public enum Opcion {
 		this.mensajeAMostrar = mensaje;
 	}
 	
+	public String getMensaje() {
+		return mensajeAMostrar;
+	}
+	
 	public abstract void ejecutar();
 	
 	protected static void setVista(Vista vista) {
