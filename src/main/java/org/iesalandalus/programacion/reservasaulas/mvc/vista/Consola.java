@@ -1,7 +1,6 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.vista;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -12,41 +11,48 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
 	private final static DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	Opcion[] opciones = Opcion.values();
-	Tramo[] tramos = Tramo.values();
+	static Opcion[] opciones = Opcion.values();
+	static Tramo[] tramos = Tramo.values();
 
 	private Consola() {
 
 	}
 
-	public void mostrarMenu() {
+//Método que recorre el array de opciones y las va mostrando con el toString de Opcion
+	public static void mostrarMenu() {
 		for (Opcion o : opciones) {
 			o.toString();
 		}
 	}
 
-	public void mostrarCabecera(String cabecera) {
+//Muestra un mensaje de cabecera
+	public static void mostrarCabecera(String cabecera) {
 		System.out.println(cabecera);
 	}
 
-	public int elegirOpcion() {
+//Método que pide que se elija una opción y la devuelve. Se validará después con el método esOrdinalValido del método getOpcionSegunOrdinal de Opcion
+	public static int elegirOpcion() {
 		System.out.println("Por favor, elija una opción del menú");
 		int eleccion = Entrada.entero();
 		return eleccion;
 	}
 
-	public Aula leerAula() {
+//Método que ejecuta leerNombreAula(), que es un método que pide un nombre para un aula. Luego crea un aula con dicho nombre y retorna una copia
+	public static Aula leerAula() {
 		Aula aula = new Aula(leerNombreAula());
 		return new Aula(aula);
 	}
 
-	public String leerNombreAula() {
+//Método que pide el nombre de un aula y lo devuelve
+	public static String leerNombreAula() {
 		System.out.println("Introduzca el nombre del aula");
 		String nombreAula = Entrada.cadena();
 		return nombreAula;
 	}
 
-	public Profesor leerProfesor() {
+//Método que ejecuta leerNombreProfesor(), que es un método que pide un nombre para un profesor. Luego pide el correo y el teléfono y crea un profesor
+//con dichos datos, para después retornar una copia
+	public static Profesor leerProfesor() {
 		String nombreProfesor = leerNombreProfesor();
 		System.out.println("Introduzca el correo del profesor");
 		String correoProfesor = Entrada.cadena();
@@ -56,13 +62,17 @@ public class Consola {
 		return new Profesor(profesor);
 	}
 
-	public String leerNombreProfesor() {
+//Método que pide el nombre de un profesor y lo devuelve
+	public static String leerNombreProfesor() {
 		System.out.println("Introduzca el nombre del profesor");
 		String nombreProfesor = Entrada.cadena();
 		return nombreProfesor;
 	}
 
-	public Tramo leerTramo() {
+//Método que pide que se elija un tramo de entre los posibles tramos, que se muestran mediante un forEach y el .toString del enum Tramo. Luego compara,
+//ignorando mayúsculas, si el tramo introducido coincide con alguno de los del array de tramos. Si es así, devuelve el Tramo correspondiente, y si no
+//nos seguirá pidiendo que introduzcamos un tramo válido mediante la bandera problema
+	public static Tramo leerTramo() {
 		Tramo tramoFinal = null;
 		boolean problema = false;
 		do {
@@ -85,7 +95,9 @@ public class Consola {
 		return tramoFinal;
 	}
 
-	public LocalDate leerDia() {
+//Método que nos pide introducir un día con un formato dado. Seguirá pidiendo el día mientras no se introduzca con el formato correcto y, una vez esté
+//bien, nos evuelve el LocalDate del día
+	public static LocalDate leerDia() {
 		LocalDate fechaFinal = null;
 		boolean problema = false;
 		do {

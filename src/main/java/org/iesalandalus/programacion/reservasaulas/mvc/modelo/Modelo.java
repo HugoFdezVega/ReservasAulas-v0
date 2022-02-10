@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.reservasaulas.mvc.modelo;
 
 import javax.naming.OperationNotSupportedException;
 
+import org.iesalandalus.programacion.reservasaulas.mvc.controlador.Controlador;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Permanencia;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
@@ -9,8 +10,11 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Reserva;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Aulas;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Profesores;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Reservas;
+import org.iesalandalus.programacion.reservasaulas.mvc.vista.Vista;
 
 public class Modelo {
+	Vista vista;
+	Controlador controlador;
 	static final private int CAPACIDAD=10;
 	
 	Aulas aulas=new Aulas (CAPACIDAD);
@@ -18,7 +22,7 @@ public class Modelo {
 	Reservas reservas=new Reservas(CAPACIDAD);
 	
 	public Modelo(){
-	
+
 	}
 	
 	public Aula[] getAulas(){
@@ -35,9 +39,6 @@ public class Modelo {
 	
 	public Aula buscarAula(Aula aula) throws OperationNotSupportedException {
 		Aula aulaEncontrada=aulas.buscar(aula);
-		if(aulaEncontrada==null) {
-			throw new OperationNotSupportedException("ERROR: No existe ningún aula con ese nombre.");
-		}
 		return aulaEncontrada;
 	}
 	
@@ -63,9 +64,6 @@ public class Modelo {
 	
 	public Profesor buscarProfesor(Profesor profesor) throws OperationNotSupportedException {
 		Profesor profesorEncontrado=profesores.buscar(profesor);
-		if(profesorEncontrado==null) {
-			throw new OperationNotSupportedException("ERROR: No existe ningún profesor con ese nombre.");
-		}
 		return profesorEncontrado;
 	}
 	
@@ -91,9 +89,6 @@ public class Modelo {
 	
 	public Reserva buscarReserva(Reserva reserva) throws OperationNotSupportedException {
 		Reserva reservaEncontrada=reservas.buscar(reserva);
-		if(reservaEncontrada==null) {
-			throw new OperationNotSupportedException("ERROR: No existe ninguna reserva con ese nombre.");
-		}
 		return reservaEncontrada;
 	}
 	
@@ -106,18 +101,20 @@ public class Modelo {
 	}
 	
 	public Reserva[] getReservasAula(Aula aula) throws OperationNotSupportedException {
-		return reservas.getReservasAula(buscarAula(aula));
+		return reservas.getReservasAula(aula);
 	}
 	
 	public Reserva[] getReservasProfesor(Profesor profesor) throws OperationNotSupportedException {
-		return reservas.getReservasProfesor(buscarProfesor(profesor));
+		return reservas.getReservasProfesor(profesor);
 	}
 	
 	public Reserva[] getReservasPermanencia(Permanencia permanencia) {
 		return reservas.getReservasPermanencia(permanencia);
 	}
 	
-	
+	public boolean consultarDisponibilidad(Aula aula, Permanencia permanencia) {
+		return reservas.consultarDisponibilidad(aula, permanencia);
+	}
 	
 	
 	
