@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.controlador.Controlador;
-import org.iesalandalus.programacion.reservasaulas.mvc.modelo.Modelo;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Permanencia;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
@@ -14,7 +13,7 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Tramo;
 
 public class Vista {
 	Controlador controlador;
-	Modelo modelo;
+
 	private final static String ERROR = "e.getMessage()";
 	private final static String NOMBRE_VALIDO = "Manolo";
 	private final static String CORREO_VALIDO = "Manolo@eldelbombo.es";
@@ -41,7 +40,7 @@ public class Vista {
 	}
 
 	public void salir() {
-		Controlador.terminar();
+		controlador.terminar();
 	}
 	
 //Método que intenta llamar al método homónimo del controlador pasándo como parámetro el método adecuado de la consola. Captura todos los errores posibles,
@@ -50,7 +49,7 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				Controlador.insertarAula(Consola.leerAula());
+				controlador.insertarAula(Consola.leerAula());
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -66,7 +65,7 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				Controlador.borrarAula(Consola.leerAula());
+				controlador.borrarAula(Consola.leerAula());
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -84,9 +83,9 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				aula = Controlador.buscarAula(Consola.leerAula());
+				aula = controlador.buscarAula(Consola.leerAula());
 				problema = false;
-			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			} catch (NullPointerException | IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				problema = true;
 			}
@@ -103,8 +102,8 @@ public class Vista {
 	public void listarAulas() {
 		String[] listaAulas = null;
 		try {
-			listaAulas = Controlador.representarAulas();
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaAulas = controlador.representarAulas();
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaAulas == null) {
@@ -124,7 +123,7 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				Controlador.insertarProfesor(Consola.leerProfesor());
+				controlador.insertarProfesor(Consola.leerProfesor());
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -140,7 +139,7 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				Controlador.borrarProfesor(Consola.leerProfesor());
+				controlador.borrarProfesor(Consola.leerProfesor());
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -158,9 +157,9 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				profesor = Controlador.buscarProfesor(Consola.leerProfesor());
+				profesor = controlador.buscarProfesor(Consola.leerProfesor());
 				problema = false;
-			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			} catch (NullPointerException | IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				problema = true;
 			}
@@ -177,12 +176,12 @@ public class Vista {
 	public void listarProfesores() {
 		String[] listaProfesores = null;
 		try {
-			listaProfesores = Controlador.representarProfesores();
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaProfesores = controlador.representarProfesores();
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaProfesores == null) {
-			System.out.println("No hay aulas que mostrar");
+			System.out.println("No hay profesores que mostrar");
 		} else {
 			for (String r : listaProfesores) {
 				if (r != null) {
@@ -199,7 +198,7 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				Controlador.realizarReserva(leerReserva(Consola.leerProfesor()));
+				controlador.realizarReserva(leerReserva(Consola.leerProfesor()));
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -227,7 +226,7 @@ public class Vista {
 				permanencia = new Permanencia(dia, tramo);
 				reserva = new Reserva(profesor, aula, permanencia);
 				problema = false;
-			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			} catch (NullPointerException | IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				problema = true;
 			}
@@ -247,7 +246,7 @@ public class Vista {
 		do {
 			try {
 				reserva = leerReserva(profesor);
-				Controlador.anularProfesor(reserva);
+				controlador.anularReserva(reserva);
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -262,12 +261,12 @@ public class Vista {
 	public void listarReservas() {
 		String[] listaReservas = null;
 		try {
-			listaReservas = Controlador.representarReservas();
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaReservas = controlador.representarReservas();
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservas == null) {
-			System.out.println("No hay aulas que mostrar");
+			System.out.println("No hay reservas que mostrar");
 		} else {
 			for (String r : listaReservas) {
 				if (r != null) {
@@ -279,16 +278,16 @@ public class Vista {
 
 //Método similar a listaReservas pero solo para un parámetro dado, que obtendremos mediante el método adecuado de la consola
 	public void listarReservasAula() {
-		String[] listaReservasAula = null;
+		Reserva[] listaReservasAula = null;
 		try {
-			listaReservasAula = Controlador.getReservasAula(Consola.leerAula());
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaReservasAula = controlador.getReservasAula(Consola.leerAula());
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasAula == null) {
-			System.out.println("El aula buscada no existe");
+			System.out.println("La reserva buscada no existe");
 		} else {
-			for (String r : listaReservasAula) {
+			for (Reserva r : listaReservasAula) {
 				if (r != null) {
 					System.out.println(r.toString());
 				}
@@ -298,16 +297,16 @@ public class Vista {
 
 //Método similar a listaReservas pero solo para un parámetro dado, que obtendremos mediante el método adecuado de la consola
 	public void listarReservasProfesor() {
-		String[] listaReservasProfesor = null;
+		Reserva[] listaReservasProfesor = null;
 		try {
-			listaReservasProfesor = Controlador.getReservasProfesor(Consola.leerProfesor());
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaReservasProfesor = controlador.getReservasProfesor(Consola.leerProfesor());
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasProfesor == null) {
 			System.out.println("El profesor buscado no existe");
 		} else {
-			for (String r : listaReservasProfesor) {
+			for (Reserva r : listaReservasProfesor) {
 				if (r != null) {
 					System.out.println(r.toString());
 				}
@@ -318,7 +317,7 @@ public class Vista {
 //Método similar a listaReservas pero solo para un parámetro dado. En este caso, tendremos que pedir el día y el tramo para crear una Permanencia que
 //pasar como parámetro al método del controlador.
 	public void listarReservasPermanencia() {
-		String[] listaReservasPermanencia = null;
+		Reserva[] listaReservasPermanencia = null;
 		Permanencia permanencia = null;
 		Tramo tramo = null;
 		LocalDate dia = null;
@@ -326,14 +325,14 @@ public class Vista {
 			tramo = Consola.leerTramo();
 			dia = Consola.leerDia();
 			permanencia = new Permanencia(dia, tramo);
-			listaReservasPermanencia = Controlador.getReservasPermamencia(permanencia);
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			listaReservasPermanencia = controlador.getReservasPermanencia(permanencia);
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasPermanencia == null) {
 			System.out.println("La permamencia buscada no existe");
 		} else {
-			for (String r : listaReservasPermanencia) {
+			for (Reserva r : listaReservasPermanencia) {
 				if (r != null) {
 					System.out.println(r.toString());
 				}
@@ -344,7 +343,7 @@ public class Vista {
 //Método que pide mediante consola un tramo y un día para crear una permanencia, luego pide un aula mediante consola y pasa el aula y la permanencia como
 //parámetros para el método homónimo del controlador, que devolverá true si el aula está disponible o false de lo contrario. Se retornan mensajes adecuados.
 	public void consultarDisponibilidad() {
-		boolean disponible;
+		boolean disponible=true;
 		Permanencia permanencia = null;
 		Tramo tramo = null;
 		LocalDate dia = null;
@@ -352,8 +351,8 @@ public class Vista {
 			tramo = Consola.leerTramo();
 			dia = Consola.leerDia();
 			permanencia = new Permanencia(dia, tramo);
-			disponible = Controlador.consultarDisponibilidad(Consola.leerAula(), permanencia);
-		} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
+			disponible = controlador.consultarDisponibilidad(Consola.leerAula(), permanencia);
+		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (disponible == true) {

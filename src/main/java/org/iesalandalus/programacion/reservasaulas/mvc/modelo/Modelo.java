@@ -10,10 +10,9 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Reserva;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Aulas;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Profesores;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Reservas;
-import org.iesalandalus.programacion.reservasaulas.mvc.vista.Vista;
 
 public class Modelo {
-	Vista vista;
+
 	Controlador controlador;
 	static final private int CAPACIDAD=10;
 	
@@ -37,16 +36,16 @@ public class Modelo {
 		return aulas.representar();
 	}
 	
-	public Aula buscarAula(Aula aula) throws OperationNotSupportedException {
+	public Aula buscarAula(Aula aula){
 		Aula aulaEncontrada=aulas.buscar(aula);
-		return aulaEncontrada;
+		return new Aula(aulaEncontrada);
 	}
 	
 	public void insertarAula(Aula aula) throws OperationNotSupportedException {
 		aulas.insertar(aula);
 	}
 	
-	public void borrarAula(Aula aula) throws OperationNotSupportedException {
+	public void borrarAula(Aula aula) throws OperationNotSupportedException{
 		aulas.borrar(aula);
 	}
 	
@@ -62,9 +61,9 @@ public class Modelo {
 		return profesores.representar();
 	}
 	
-	public Profesor buscarProfesor(Profesor profesor) throws OperationNotSupportedException {
+	public Profesor buscarProfesor(Profesor profesor){
 		Profesor profesorEncontrado=profesores.buscar(profesor);
-		return profesorEncontrado;
+		return new Profesor(profesorEncontrado);
 	}
 	
 	public void insertarProfesor (Profesor profesor) throws OperationNotSupportedException {
@@ -87,9 +86,9 @@ public class Modelo {
 		return reservas.representar();
 	}
 	
-	public Reserva buscarReserva(Reserva reserva) throws OperationNotSupportedException {
+	public Reserva buscarReserva(Reserva reserva){
 		Reserva reservaEncontrada=reservas.buscar(reserva);
-		return reservaEncontrada;
+		return new Reserva(reservaEncontrada);
 	}
 	
 	public void realizarReserva(Reserva reserva) throws OperationNotSupportedException {
@@ -100,11 +99,11 @@ public class Modelo {
 		reservas.borrar(reserva);
 	}
 	
-	public Reserva[] getReservasAula(Aula aula) throws OperationNotSupportedException {
+	public Reserva[] getReservasAula(Aula aula){
 		return reservas.getReservasAula(aula);
 	}
 	
-	public Reserva[] getReservasProfesor(Profesor profesor) throws OperationNotSupportedException {
+	public Reserva[] getReservasProfesor(Profesor profesor){
 		return reservas.getReservasProfesor(profesor);
 	}
 	
