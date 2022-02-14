@@ -13,6 +13,8 @@ public class Controlador {
 	Modelo modelo;
 	Vista vista;
 	
+//Constructor del controlador, que toma como parámetros el Modelo y la Vista, comprueba nulos, y luego se asigna a sí mismo a la Vista
+//para que ésta sepa quién es el Controlador.
 	public Controlador(Modelo modelo, Vista vista) 
 	{
 		if (modelo == null) {
@@ -26,14 +28,19 @@ public class Controlador {
 		this.vista.setControlador(this);
 	}
 	
+//Método comenzar, que corre el método homónimo de la Vista
 	public void comenzar() {
 		vista.comenzar();
 	}
 	
+//Método terminar, que simplemente corre el método exit y cierra la ejecución
 	public void terminar() {
-		System.out.println("¡Hasta otra!");
+		System.exit(0);
 	}
 	
+//Los siguientes métodos simplemente corren los métodos homónimos del modelo, recogen los parámetros que se les pasa desde la Vista
+//(que es desde donde estos métodos serán llamados) y le devuelve a la Vista los datos que retorna el modelo. También propaga las 
+//excepciones para que sean tratadas más arriba
 	public void insertarAula(Aula aula) throws OperationNotSupportedException {
 		modelo.insertarAula(aula);
 	}
@@ -52,12 +59,12 @@ public class Controlador {
 	
 	public Aula buscarAula(Aula aula) {
 		Aula aulaBuscada=modelo.buscarAula(aula);
-		return new Aula(aulaBuscada);
+		return aulaBuscada;
 	}
 	
 	public Profesor buscarProfesor(Profesor profesor) {
 		Profesor profesorBuscado=modelo.buscarProfesor(profesor);
-		return new Profesor(profesorBuscado);
+		return profesorBuscado;
 	}
 	
 	public String[] representarAulas() {

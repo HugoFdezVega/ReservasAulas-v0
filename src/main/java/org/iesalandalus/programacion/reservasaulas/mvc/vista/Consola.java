@@ -20,6 +20,7 @@ public class Consola {
 
 //Método que recorre el array de opciones y las va mostrando con el toString de Opcion
 	public static void mostrarMenu() {
+		mostrarCabecera("Bienvenido al sistema de reservas del IES Al-Ándalus. Entra libremente y deja parte de la felicidad que traes contigo.");
 		for (Opcion o : opciones) {
 			System.out.println(o);
 		}
@@ -27,7 +28,9 @@ public class Consola {
 
 //Muestra un mensaje de cabecera
 	public static void mostrarCabecera(String cabecera) {
-		System.out.println(cabecera);
+		LocalDate presente=LocalDate.now();
+		String salida=" Hoy es "+presente.format(FORMATO_DIA).toString();
+		System.out.println(cabecera+salida);
 	}
 
 //Método que pide que se elija una opción y la devuelve. Se validará después con el método esOrdinalValido del método getOpcionSegunOrdinal de Opcion
@@ -96,7 +99,7 @@ public class Consola {
 	}
 
 //Método que nos pide introducir un día con un formato dado. Seguirá pidiendo el día mientras no se introduzca con el formato correcto y, una vez esté
-//bien, nos evuelve el LocalDate del día
+//o la fecha sea anterior a la presente, nos devuelve el LocalDate del día.
 	public static LocalDate leerDia() {
 		LocalDate fechaFinal = null;
 		boolean problema = false;
@@ -110,6 +113,10 @@ public class Consola {
 			} catch (DateTimeParseException e) {
 				System.out.println("ERROR: Formato incorrecto");
 				problema = true;
+			}
+			if(fechaFinal.isBefore(LocalDate.now())) {
+				System.out.println("ERROR: La fecha introducida no puede ser anterior al día presente");
+				problema=true;
 			}
 		} while (problema == true);
 		return fechaFinal;

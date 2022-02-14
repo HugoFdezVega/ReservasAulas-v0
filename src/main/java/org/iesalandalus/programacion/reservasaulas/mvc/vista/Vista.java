@@ -14,10 +14,12 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Tramo;
 public class Vista {
 	Controlador controlador;
 
-	private final static String ERROR = "e.getMessage()";
+	private final static String ERROR = "No existen reservas para el parámetro proporcionado";
 	private final static String NOMBRE_VALIDO = "Manolo";
-	private final static String CORREO_VALIDO = "Manolo@eldelbombo.es";
+	private final static String CORREO_VALIDO = "manolo@eldelbombo.com";
 
+//Constructor de la vista, que corre el método setVista del enum Opcion para que éste sepa quién es la Vista y ejecute las opciones en
+//consecuencia. 
 	public Vista() {
 		Opcion.setVista(this);
 	}
@@ -30,16 +32,21 @@ public class Vista {
 //Método comenzar, que muestra el menú, nos da a elegir una opción, pasa dicha opción por el método getOpcionSegunOrdinal para validar que el ordenal
 //sea correcto, lo transforma en una Opcion y luego la ejecuta. Todo ello se repetirá mientras la Opcion elegida no sea SALIR
 	public void comenzar() {
-		int ordinalOpcion;
+		int ordinalOpcion=0;
 		do {
-			Consola.mostrarMenu();
-			ordinalOpcion = Consola.elegirOpcion();
-			Opcion opcion = Opcion.getOpcionSegunOrdinal(ordinalOpcion);
-			opcion.ejecutar();
+			try {
+				Consola.mostrarMenu();
+				ordinalOpcion = Consola.elegirOpcion();
+				Opcion opcion = Opcion.getOpcionSegunOrdinal(ordinalOpcion);
+				opcion.ejecutar();
+			} catch (NullPointerException | IllegalArgumentException e) {
+				System.out.println(e.getMessage());}
 		} while (ordinalOpcion != Opcion.SALIR.ordinal());
 	}
 
+//Método que llama al método terminar del controlador y da un mensaje de despedida
 	public void salir() {
+		System.out.println("¡Hasta otra!");
 		controlador.terminar();
 	}
 	
@@ -139,7 +146,8 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				controlador.borrarProfesor(Consola.leerProfesor());
+				Profesor profesorABorrar=new Profesor(Consola.leerNombreProfesor(),CORREO_VALIDO);
+				controlador.borrarProfesor(profesorABorrar);
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -157,7 +165,8 @@ public class Vista {
 		boolean problema = false;
 		do {
 			try {
-				profesor = controlador.buscarProfesor(Consola.leerProfesor());
+				Profesor profesorABuscar=new Profesor(Consola.leerNombreProfesor(),CORREO_VALIDO);
+				profesor = controlador.buscarProfesor(profesorABuscar);
 				problema = false;
 			} catch (NullPointerException | IllegalArgumentException e) {
 				System.out.println(e.getMessage());
@@ -285,7 +294,7 @@ public class Vista {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasAula == null) {
-			System.out.println("La reserva buscada no existe");
+			System.out.println(ERROR);
 		} else {
 			for (Reserva r : listaReservasAula) {
 				if (r != null) {
@@ -299,12 +308,13 @@ public class Vista {
 	public void listarReservasProfesor() {
 		Reserva[] listaReservasProfesor = null;
 		try {
-			listaReservasProfesor = controlador.getReservasProfesor(Consola.leerProfesor());
+			Profesor profesorABuscar=new Profesor(Consola.leerNombreProfesor(),CORREO_VALIDO);
+			listaReservasProfesor = controlador.getReservasProfesor(profesorABuscar);
 		} catch (NullPointerException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasProfesor == null) {
-			System.out.println("El profesor buscado no existe");
+			System.out.println(ERROR);
 		} else {
 			for (Reserva r : listaReservasProfesor) {
 				if (r != null) {
@@ -330,7 +340,7 @@ public class Vista {
 			System.out.println(e.getMessage());
 		}
 		if (listaReservasPermanencia == null) {
-			System.out.println("La permamencia buscada no existe");
+			System.out.println(ERROR);
 		} else {
 			for (Reserva r : listaReservasPermanencia) {
 				if (r != null) {

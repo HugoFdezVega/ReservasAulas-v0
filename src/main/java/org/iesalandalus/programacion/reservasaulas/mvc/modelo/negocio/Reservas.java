@@ -158,9 +158,6 @@ public class Reservas {
 		if (profesor == null) {
 			throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
 		}
-//		else if(profesores.buscar(profesor)==null) {
-//			reservasProfesor=null;
-//		}
 		for (int i = 0; i <= tamano - 1; i++) {
 			if (profesor.equals(coleccionReservas[i].getProfesor())) {
 				reservasProfesor[indice] = new Reserva(coleccionReservas[i]);
@@ -178,9 +175,6 @@ public class Reservas {
 		if (aula == null) {
 			throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
 		}
-//			else if(profesores.buscar(profesor)==null) {
-//				reservasProfesor=null;
-//			}
 		for (int i = 0; i <= tamano - 1; i++) {
 			if (aula.equals(coleccionReservas[i].getAula())) {
 				reservasAula[indice] = new Reserva(coleccionReservas[i]);
@@ -198,9 +192,6 @@ public class Reservas {
 		if (permanencia == null) {
 			throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
 		}
-//				else if(profesores.buscar(profesor)==null) {
-//					reservasProfesor=null;
-//				}
 		for (int i = 0; i <= tamano - 1; i++) {
 			if (permanencia.equals(coleccionReservas[i].getPermanencia())) {
 				reservasPermanencia[indice] = new Reserva(coleccionReservas[i]);
