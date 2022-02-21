@@ -12,16 +12,18 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Reservas;
 
 public class Modelo {
 
-//Asignamos la capacidad que queramos y creamos Aulas, Profesores y Reservas pasándosela como parámetro para que en dichas clases se
-//creen los arrays respectivos con los que trabajaremos
+//Declaramos la capacidad que vamos a utilizar, así como los objetos de Aulas, Profesores y Reservas con los que trabajaremos
 	static final private int CAPACIDAD=10;
 
-	Aulas aulas=new Aulas (CAPACIDAD);
-	Profesores profesores=new Profesores(CAPACIDAD);
-	Reservas reservas=new Reservas(CAPACIDAD);
+	Aulas aulas;
+	Profesores profesores;
+	Reservas reservas;
 	
+//Constructor que crea los objetos anteriormente mencionados con la capacidad elegida
 	public Modelo(){
-
+		aulas=new Aulas (CAPACIDAD);
+		profesores=new Profesores(CAPACIDAD);
+		reservas=new Reservas(CAPACIDAD);
 	}
 	
 	public Aula[] getAulas(){
